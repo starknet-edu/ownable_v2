@@ -14,11 +14,11 @@ mod Ownable {
     #[event]
     #[derive(Drop, starknet::Event)]
     enum Event {
-      OwnershipTransferred: OwnershipTransferred2,  
+      OwnershipTransferred: OwnershipTransferred,  
     }
 
     #[derive(Drop, starknet::Event)]
-    struct OwnershipTransferred2 {
+    struct OwnershipTransferred {
         #[key]
         prev_owner: ContractAddress,
         #[key]

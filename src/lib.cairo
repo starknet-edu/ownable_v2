@@ -42,7 +42,7 @@ mod Ownable {
             self.only_owner();
             let prev_owner = self.owner.read();
             self.owner.write(new_owner);
-            self.emit(Event::OwnershipTransferred(OwnershipTransferred2{
+            self.emit(Event::OwnershipTransferred(OwnershipTransferred {
                 prev_owner: prev_owner,
                 new_owner: new_owner,
             }));

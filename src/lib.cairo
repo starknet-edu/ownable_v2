@@ -6,6 +6,10 @@ trait OwnableTrait<T> {
     fn get_owner(self: @T) -> ContractAddress;
 }
 
+trait PrivateTrait<T> {
+    fn only_owner(self: @T);
+}
+
 #[starknet::contract]
 mod Ownable {
     use super::ContractAddress;
@@ -39,7 +43,8 @@ mod Ownable {
     #[external(v0)]
     impl OwnableImpl of super::OwnableTrait<ContractState> {
         fn transfer_ownership(ref self: ContractState, new_owner: ContractAddress) {
-            self.only_owner();
+            let snap = @self;
+            snap.only_owner();
             let prev_owner = self.owner.read();
             self.owner.write(new_owner);
             self.emit(Event::OwnershipTransferred(OwnershipTransferred2{
@@ -53,8 +58,7 @@ mod Ownable {
         }
     }
 
-    #[generate_trait]
-    impl PrivateMethods of PrivateMethodsTrait {
+    impl PrivateImpl of super::PrivateTrait<ContractState> {
         fn only_owner(self: @ContractState) {
             let caller = get_caller_address();
             assert(caller == self.owner.read(), 'Caller is not the owner');

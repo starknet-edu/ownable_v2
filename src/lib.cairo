@@ -31,9 +31,8 @@ mod Ownable {
     }
 
     #[constructor]
-    fn constructor(ref self: ContractState) {
-        let deployer = get_caller_address();
-        self.owner.write(deployer);
+    fn constructor(ref self: ContractState, owner: ContractAddress) {
+        self.owner.write(owner);
     }
 
     #[external(v0)]

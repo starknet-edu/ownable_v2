@@ -31,8 +31,8 @@ mod Ownable {
     }
 
     #[constructor]
-    fn constructor(ref self: ContractState, owner: ContractAddress) {
-        self.owner.write(owner);
+    fn constructor(ref self: ContractState, init_owner: ContractAddress) {
+        self.owner.write(init_owner);
     }
 
     #[external(v0)]
